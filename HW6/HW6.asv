@@ -39,6 +39,8 @@ M3 = M3n / sin(beta2-theta2);
 disp(['b) ' 'M3 = ' num2str(M3)])
 disp(['   ' 'p3 = ' num2str(p3)])
 
+disp(
+
 %% Problem 2
 
 close all
@@ -105,8 +107,10 @@ end
     p4 = p3 * ( (1+(gamma-1)/2*M3^2) ...
                /(1+(gamma-1)/2*M4^2) ) ^ (gamma/(gamma-1));
 
-cl = (cos(alpha+theta)*(p3-p2)+cos(alpha-theta)*(p4-p1)) / (gamma*p*Mi^2);
-cd = (sin(alpha+theta)*(p3-p2)+sin(alpha-theta)*(p4-p1)) / (gamma*p*Mi^2);
+cl = ( -cos(theta-alpha)*p1 - cos(-theta-alpha)*p2 ...
+       +cos(theta+alpha)*p3 + cos(-theta+alpha)*p4 ) / (0.5*gamma*p*Mi^2);
+cd = (  sin(theta-alpha)*p1 + sin(-theta-alpha)*p2 ...
+       +sin(theta+alpha)*p3 + sin(-theta+alpha)*p4 ) / (0.5*gamma*p*Mi^2);
 
 cl_vect(i) = cl;
 cd_vect(i) = cd;
@@ -121,7 +125,7 @@ alpha_vect = rad2deg(alpha_vect);
 
 % plotting
 figure(1)
-plot(rad2deg(alpha_vect),cl_vect./cd_vect)
+plot(alpha_vect,cl_vect./cd_vect)
 title('$C_L/C_D$ vs. $\alpha$')
 xlabel('$\alpha$')
 ylabel('$C_L/C_D$')
@@ -160,7 +164,7 @@ syms m1 real
 mU = sym('mU', [pres_points,1]) ;
 mL = sym('mL', [pres_points,1]) ;
 
-alpha_vect = deg2rad(linspace(0,12,25));
+alpha_vect = deg2rad(linspace(0,25,100));
 cl_vect = zeros(length(alpha_vect),1);
 cd_vect = zeros(length(alpha_vect),1);
 

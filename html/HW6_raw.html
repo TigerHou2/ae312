@@ -1,0 +1,595 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>HW6</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-04-16"><meta name="DC.source" content="HW6.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Problem 1</a></li><li><a href="#2">Problem 2</a></li><li><a href="#3">Problem 3</a></li></ul></div><h2 id="1">Problem 1</h2><pre class="codeinput">close <span class="string">all</span>
+clear;clc
+
+disp(<span class="string">'=== Problem 1 ==='</span>)
+
+p1 = 100;
+gamma = 1.4;
+theta1 = deg2rad(12);
+theta2 = deg2rad(8);
+mu1 = deg2rad(20);
+
+<span class="comment">% ----- Part (a) -----</span>
+
+M1 = 1/sin(mu1);
+
+disp([<span class="string">'a) '</span> <span class="string">'M1 = '</span> num2str(M1)])
+
+<span class="comment">% ----- Part (b) -----</span>
+
+syms <span class="string">m2</span> <span class="string">m3</span> <span class="string">real</span>
+
+eqn = theta1 == PM(m2,gamma) - PM(M1,gamma);
+M2 = abs(double(vpasolve(eqn,m2)));
+
+<span class="comment">% p2 = gamma * M1^2 / sqrt(M1^2-1) * theta1 * p1 + p1;</span>
+p2 = p1 * ( (1+(gamma-1)/2*M1^2) <span class="keyword">...</span>
+           /(1+(gamma-1)/2*M2^2) ) ^ (gamma/(gamma-1));
+
+beta2 = TBM_get_beta(M2,theta2,gamma);
+p3 = p2 * TBM_get_pres(M2,beta2,gamma);
+
+M2n = M2 * sin(beta2);
+M3n = sqrt( (M2n^2 + 2/(gamma-1)) / (2*gamma/(gamma-1)*M2n^2-1) );
+
+M3 = M3n / sin(beta2-theta2);
+
+disp([<span class="string">'b) '</span> <span class="string">'M3 = '</span> num2str(M3)])
+disp([<span class="string">'   '</span> <span class="string">'p3 = '</span> num2str(p3)])
+
+disp(<span class="string">' '</span>)
+</pre><pre class="codeoutput">=== Problem 1 ===
+a) M1 = 2.9238
+b) M3 = 3.1136
+   p3 = 72.8548
+ 
+</pre><h2 id="2">Problem 2</h2><pre class="codeinput">close <span class="string">all</span>
+clear;clc
+
+disp(<span class="string">'=== Problem 2 ==='</span>)
+
+<span class="comment">% ----- Part (a) -----</span>
+
+disp(<span class="string">'a) See figure attached in HW submission.'</span>)
+
+<span class="comment">% ----- Part (b) -----</span>
+
+disp(<span class="string">'b) See derivation attached in HW submission.'</span>)
+
+<span class="comment">% ----- Part (c) -----</span>
+
+disp(<span class="string">'c) '</span>)
+
+alpha_vect = deg2rad(linspace(0,30,100)); <span class="comment">% stalls after 25.5 deg</span>
+cl_vect = zeros(length(alpha_vect),1);
+cd_vect = zeros(length(alpha_vect),1);
+
+syms <span class="string">m1</span> <span class="string">m2</span> <span class="string">m4</span> <span class="string">real</span>
+
+<span class="keyword">for</span> i = 1:length(alpha_vect)
+
+alpha = alpha_vect(i);
+theta = deg2rad(4);
+gamma = 1.4;
+p = 100;
+Mi = 2.5;
+c = 1;
+t = 0.07;
+
+<span class="keyword">if</span> alpha &lt;= theta <span class="comment">% oblique shock</span>
+    t1 = theta - alpha;
+    beta1 = TBM_get_beta(Mi,t1,gamma);
+    p1 = p * TBM_get_pres(Mi,beta1,gamma);
+    Min = Mi * sin(beta1);
+    M1n = sqrt( (Min^2 + 2/(gamma-1)) / (2*gamma/(gamma-1)*Min^2-1) );
+    M1 = M1n / sin(beta1-t1);
+<span class="keyword">else</span> <span class="comment">% alpha &gt; theta, expansion fan</span>
+    t1 = theta - alpha;
+    eqn = -t1 == PM(m1,gamma) - PM(Mi,gamma);
+    M1 = abs(double(vpasolve(eqn,m1)));
+    p1 = p * ( (1+(gamma-1)/2*Mi^2) <span class="keyword">...</span>
+              /(1+(gamma-1)/2*M1^2) ) ^ (gamma/(gamma-1));
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> size(M1,1) == 0
+    <span class="keyword">continue</span>
+<span class="keyword">end</span>
+
+<span class="comment">% calculations for p2,p3,p4 remain the same in both cases</span>
+
+<span class="comment">% p2: expansion fan</span>
+    t2 = -theta - alpha;
+    eqn = -t2 == PM(m2,gamma) - PM(M1,gamma);
+    M2 = abs(double(vpasolve(eqn,m2)));
+    p2 = p1 * ( (1+(gamma-1)/2*M1^2) <span class="keyword">...</span>
+               /(1+(gamma-1)/2*M2^2) ) ^ (gamma/(gamma-1));
+
+<span class="comment">% p3: oblique shock</span>
+    t3 = alpha + theta;
+    beta3 = TBM_get_beta(Mi,t3,gamma);
+    p3 = p * TBM_get_pres(Mi,beta3,gamma);
+    Min = Mi * sin(beta3);
+    M3n = sqrt( (Min^2 + 2/(gamma-1)) / (2*gamma/(gamma-1)*Min^2-1) );
+    M3 = M3n / sin(beta3-t3);
+
+<span class="comment">% p4: expansion fan</span>
+    t4 = -theta;
+    eqn = -t4 == PM(m4,gamma) - PM(M3,gamma);
+    M4 = abs(double(vpasolve(eqn,m4)));
+    p4 = p3 * ( (1+(gamma-1)/2*M3^2) <span class="keyword">...</span>
+               /(1+(gamma-1)/2*M4^2) ) ^ (gamma/(gamma-1));
+
+cl = ( -cos(theta-alpha)*p1 - cos(-theta-alpha)*p2 <span class="keyword">...</span>
+       +cos(theta+alpha)*p3 + cos(-theta+alpha)*p4 ) / (0.5*gamma*p*Mi^2);
+cd = (  sin(theta-alpha)*p1 + sin(-theta-alpha)*p2 <span class="keyword">...</span>
+       +sin(theta+alpha)*p3 + sin(-theta+alpha)*p4 ) / (0.5*gamma*p*Mi^2);
+
+cl_vect(i) = cl;
+cd_vect(i) = cd;
+
+<span class="keyword">end</span>
+
+alpha_vect(imag(cl_vect)~=0) = [];
+cd_vect(imag(cl_vect)~=0) = [];
+cl_vect(imag(cl_vect)~=0) = [];
+
+alpha_vect = rad2deg(alpha_vect);
+
+<span class="comment">% plotting</span>
+figure(1)
+plot(alpha_vect,cl_vect./cd_vect)
+title(<span class="string">'$C_L/C_D$ vs. $\alpha$'</span>)
+xlabel(<span class="string">'$\alpha$'</span>)
+ylabel(<span class="string">'$C_L/C_D$'</span>)
+grid(gca,<span class="string">'minor'</span>)
+grid <span class="string">on</span>
+latexify
+
+figure(2)
+plot(cd_vect,cl_vect)
+title(<span class="string">'$C_L$ vs. $C_D$'</span>)
+xlabel(<span class="string">'$C_D$'</span>)
+ylabel(<span class="string">'$C_L$'</span>)
+grid(gca,<span class="string">'minor'</span>)
+grid <span class="string">on</span>
+latexify
+
+disp(<span class="string">' '</span>)
+</pre><pre class="codeoutput">=== Problem 2 ===
+a) See figure attached in HW submission.
+b) See derivation attached in HW submission.
+c) 
+ 
+</pre><img vspace="5" hspace="5" src="HW6_01.png" alt=""> <img vspace="5" hspace="5" src="HW6_02.png" alt=""> <h2 id="3">Problem 3</h2><pre class="codeinput">close <span class="string">all</span>
+clear;clc
+
+disp(<span class="string">'=== Problem 3 ==='</span>)
+
+syms <span class="string">x</span> <span class="string">real</span>
+
+t = 0.03;
+c = 1;
+Mi = 2.5;
+p = 100;
+gamma = 1.4;
+
+h = t - t.*(x./c).^2;
+theta = diff(h,x);
+theta0 = atan(double(subs(theta,x,-1))); <span class="comment">% theta at the leading edge</span>
+
+pres_points = 25;
+syms <span class="string">m1</span> <span class="string">real</span>
+mU = sym(<span class="string">'mU'</span>, [pres_points,1]) ;
+mL = sym(<span class="string">'mL'</span>, [pres_points,1]) ;
+
+alpha_vect = deg2rad(linspace(0,25,100));
+cl_vect = zeros(length(alpha_vect),1);
+cd_vect = zeros(length(alpha_vect),1);
+
+<span class="comment">% alpha_vect = deg2rad([0.1]);</span>
+
+<span class="keyword">for</span> i = 1:length(alpha_vect)
+
+    alpha = alpha_vect(i);
+
+<span class="comment">% top surface LE oblique shock / expansion fan</span>
+<span class="keyword">if</span> alpha &lt;= theta0 <span class="comment">% oblique shock</span>
+    t1 = theta0 - alpha;
+    beta1 = TBM_get_beta(Mi,t1,gamma);
+    p1 = p * TBM_get_pres(Mi,beta1,gamma);
+    Min = Mi * sin(beta1);
+    M1n = sqrt( (Min^2 + 2/(gamma-1)) / (2*gamma/(gamma-1)*Min^2-1) );
+    M1 = M1n / sin(beta1-t1);
+<span class="keyword">else</span> <span class="comment">% alpha &gt; theta0, expansion fan</span>
+    t1 = theta0 - alpha;
+    eqn = -t1 == PM(m1,gamma) - PM(Mi,gamma);
+    M1 = abs(double(vpasolve(eqn,m1)));
+    p1 = p * ( (1+(gamma-1)/2*Mi^2) <span class="keyword">...</span>
+              /(1+(gamma-1)/2*M1^2) ) ^ (gamma/(gamma-1));
+<span class="keyword">end</span>
+
+<span class="comment">% bottom surface LE oblique shock</span>
+    t3 = theta0 + alpha;
+    beta3 = TBM_get_beta(Mi,t3,gamma);
+    p3 = p * TBM_get_pres(Mi,beta3,gamma);
+    Min = Mi * sin(beta3);
+    M3n = sqrt( (Min^2 + 2/(gamma-1)) / (2*gamma/(gamma-1)*Min^2-1) );
+    M3 = M3n / sin(beta3-t3);
+
+<span class="comment">% sample a whole bunch of points for pressure distribution</span>
+x = linspace(-1,1,pres_points)';
+theta_vect = double(subs(theta,x));
+
+thetas = theta_vect-theta_vect(1);
+eqnU = -thetas == PM(mU,gamma) - PM(M1,gamma);
+eqnL = -thetas == PM(mL,gamma) - PM(M3,gamma);
+
+MU = struct2cell(vpasolve(eqnU,mU));
+ML = struct2cell(vpasolve(eqnL,mL));
+
+m_uu = zeros(length(MU),1);
+m_ll = zeros(length(ML),1);
+
+<span class="keyword">for</span> k = 1:length(MU)
+    m_uu(k) = abs(double(MU{k}));
+    m_ll(k) = abs(double(ML{k}));
+<span class="keyword">end</span>
+
+pu = p1 .* ( (1+(gamma-1)./2.*  M1.^2) <span class="keyword">...</span>
+           ./(1+(gamma-1)./2.*m_uu.^2) ) .^ (gamma./(gamma-1));
+pl = p3 .* ( (1+(gamma-1)./2.*  M3.^2) <span class="keyword">...</span>
+           ./(1+(gamma-1)./2.*m_ll.^2) ) .^ (gamma./(gamma-1));
+
+cl = sum( pl.*cos(theta_vect+alpha)<span class="keyword">...</span>
+         -pu.*cos(theta_vect-alpha) )<span class="keyword">...</span>
+    /length(pu)/(0.5*gamma*p*Mi^2);
+cd = sum( pl.*sin(theta_vect+alpha)<span class="keyword">...</span>
+         +pu.*sin(theta_vect-alpha) )<span class="keyword">...</span>
+    /length(pu)/(0.5*gamma*p*Mi^2);
+
+cl_vect(i) = cl;
+cd_vect(i) = cd;
+
+<span class="keyword">end</span>
+
+figure(3)
+plot(rad2deg(alpha_vect),cl_vect./cd_vect)
+title(<span class="string">'$C_L/C_D$ vs. $\alpha$'</span>)
+xlabel(<span class="string">'$\alpha$'</span>)
+ylabel(<span class="string">'$C_L/C_D$'</span>)
+grid(gca,<span class="string">'minor'</span>)
+grid <span class="string">on</span>
+latexify
+</pre><pre class="codeoutput">=== Problem 3 ===
+</pre><img vspace="5" hspace="5" src="HW6_03.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Problem 1
+
+close all
+clear;clc
+
+disp('=== Problem 1 ===')
+
+p1 = 100;
+gamma = 1.4;
+theta1 = deg2rad(12);
+theta2 = deg2rad(8);
+mu1 = deg2rad(20);
+
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH- Part (a) REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+
+M1 = 1/sin(mu1);
+
+disp(['a) ' 'M1 = ' num2str(M1)])
+
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH- Part (b) REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+
+syms m2 m3 real
+
+eqn = theta1 == PM(m2,gamma) - PM(M1,gamma);
+M2 = abs(double(vpasolve(eqn,m2)));
+
+% p2 = gamma * M1^2 / sqrt(M1^2-1) * theta1 * p1 + p1;
+p2 = p1 * ( (1+(gamma-1)/2*M1^2) ...
+           /(1+(gamma-1)/2*M2^2) ) ^ (gamma/(gamma-1));
+
+beta2 = TBM_get_beta(M2,theta2,gamma);
+p3 = p2 * TBM_get_pres(M2,beta2,gamma);
+
+M2n = M2 * sin(beta2);
+M3n = sqrt( (M2n^2 + 2/(gamma-1)) / (2*gamma/(gamma-1)*M2n^2-1) );
+
+M3 = M3n / sin(beta2-theta2);
+
+disp(['b) ' 'M3 = ' num2str(M3)])
+disp(['   ' 'p3 = ' num2str(p3)])
+
+disp(' ')
+
+%% Problem 2
+
+close all
+clear;clc
+
+disp('=== Problem 2 ===')
+
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH- Part (a) REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+
+disp('a) See figure attached in HW submission.')
+
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH- Part (b) REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+
+disp('b) See derivation attached in HW submission.')
+
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH- Part (c) REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-
+
+disp('c) ')
+
+alpha_vect = deg2rad(linspace(0,30,100)); % stalls after 25.5 deg
+cl_vect = zeros(length(alpha_vect),1);
+cd_vect = zeros(length(alpha_vect),1);
+
+syms m1 m2 m4 real
+
+for i = 1:length(alpha_vect)
+
+alpha = alpha_vect(i);
+theta = deg2rad(4);
+gamma = 1.4;
+p = 100;
+Mi = 2.5;
+c = 1;
+t = 0.07;
+
+if alpha <= theta % oblique shock
+    t1 = theta - alpha;
+    beta1 = TBM_get_beta(Mi,t1,gamma);
+    p1 = p * TBM_get_pres(Mi,beta1,gamma);
+    Min = Mi * sin(beta1);
+    M1n = sqrt( (Min^2 + 2/(gamma-1)) / (2*gamma/(gamma-1)*Min^2-1) );
+    M1 = M1n / sin(beta1-t1);
+else % alpha > theta, expansion fan
+    t1 = theta - alpha;
+    eqn = -t1 == PM(m1,gamma) - PM(Mi,gamma);
+    M1 = abs(double(vpasolve(eqn,m1)));
+    p1 = p * ( (1+(gamma-1)/2*Mi^2) ...
+              /(1+(gamma-1)/2*M1^2) ) ^ (gamma/(gamma-1));
+end
+
+if size(M1,1) == 0
+    continue
+end
+
+% calculations for p2,p3,p4 remain the same in both cases
+
+% p2: expansion fan
+    t2 = -theta - alpha;
+    eqn = -t2 == PM(m2,gamma) - PM(M1,gamma);
+    M2 = abs(double(vpasolve(eqn,m2)));
+    p2 = p1 * ( (1+(gamma-1)/2*M1^2) ...
+               /(1+(gamma-1)/2*M2^2) ) ^ (gamma/(gamma-1));
+
+% p3: oblique shock
+    t3 = alpha + theta;
+    beta3 = TBM_get_beta(Mi,t3,gamma);
+    p3 = p * TBM_get_pres(Mi,beta3,gamma);
+    Min = Mi * sin(beta3);
+    M3n = sqrt( (Min^2 + 2/(gamma-1)) / (2*gamma/(gamma-1)*Min^2-1) );
+    M3 = M3n / sin(beta3-t3);
+
+% p4: expansion fan
+    t4 = -theta;
+    eqn = -t4 == PM(m4,gamma) - PM(M3,gamma);
+    M4 = abs(double(vpasolve(eqn,m4)));
+    p4 = p3 * ( (1+(gamma-1)/2*M3^2) ...
+               /(1+(gamma-1)/2*M4^2) ) ^ (gamma/(gamma-1));
+
+cl = ( -cos(theta-alpha)*p1 - cos(-theta-alpha)*p2 ...
+       +cos(theta+alpha)*p3 + cos(-theta+alpha)*p4 ) / (0.5*gamma*p*Mi^2);
+cd = (  sin(theta-alpha)*p1 + sin(-theta-alpha)*p2 ...
+       +sin(theta+alpha)*p3 + sin(-theta+alpha)*p4 ) / (0.5*gamma*p*Mi^2);
+
+cl_vect(i) = cl;
+cd_vect(i) = cd;
+
+end
+
+alpha_vect(imag(cl_vect)~=0) = [];
+cd_vect(imag(cl_vect)~=0) = [];
+cl_vect(imag(cl_vect)~=0) = [];
+
+alpha_vect = rad2deg(alpha_vect);
+
+% plotting
+figure(1)
+plot(alpha_vect,cl_vect./cd_vect)
+title('$C_L/C_D$ vs. $\alpha$')
+xlabel('$\alpha$')
+ylabel('$C_L/C_D$')
+grid(gca,'minor')
+grid on
+latexify
+
+figure(2)
+plot(cd_vect,cl_vect)
+title('$C_L$ vs. $C_D$')
+xlabel('$C_D$')
+ylabel('$C_L$')
+grid(gca,'minor')
+grid on
+latexify
+
+disp(' ')
+
+%% Problem 3
+
+close all
+clear;clc
+
+disp('=== Problem 3 ===')
+
+syms x real
+
+t = 0.03;
+c = 1;
+Mi = 2.5;
+p = 100;
+gamma = 1.4;
+
+h = t - t.*(x./c).^2;
+theta = diff(h,x);
+theta0 = atan(double(subs(theta,x,-1))); % theta at the leading edge
+
+pres_points = 25;
+syms m1 real
+mU = sym('mU', [pres_points,1]) ;
+mL = sym('mL', [pres_points,1]) ;
+
+alpha_vect = deg2rad(linspace(0,25,100));
+cl_vect = zeros(length(alpha_vect),1);
+cd_vect = zeros(length(alpha_vect),1);
+
+% alpha_vect = deg2rad([0.1]);
+
+for i = 1:length(alpha_vect)
+    
+    alpha = alpha_vect(i);
+
+% top surface LE oblique shock / expansion fan
+if alpha <= theta0 % oblique shock
+    t1 = theta0 - alpha;
+    beta1 = TBM_get_beta(Mi,t1,gamma);
+    p1 = p * TBM_get_pres(Mi,beta1,gamma);
+    Min = Mi * sin(beta1);
+    M1n = sqrt( (Min^2 + 2/(gamma-1)) / (2*gamma/(gamma-1)*Min^2-1) );
+    M1 = M1n / sin(beta1-t1);
+else % alpha > theta0, expansion fan
+    t1 = theta0 - alpha;
+    eqn = -t1 == PM(m1,gamma) - PM(Mi,gamma);
+    M1 = abs(double(vpasolve(eqn,m1)));
+    p1 = p * ( (1+(gamma-1)/2*Mi^2) ...
+              /(1+(gamma-1)/2*M1^2) ) ^ (gamma/(gamma-1));
+end
+
+% bottom surface LE oblique shock
+    t3 = theta0 + alpha;
+    beta3 = TBM_get_beta(Mi,t3,gamma);
+    p3 = p * TBM_get_pres(Mi,beta3,gamma);
+    Min = Mi * sin(beta3);
+    M3n = sqrt( (Min^2 + 2/(gamma-1)) / (2*gamma/(gamma-1)*Min^2-1) );
+    M3 = M3n / sin(beta3-t3);
+
+% sample a whole bunch of points for pressure distribution
+x = linspace(-1,1,pres_points)';
+theta_vect = double(subs(theta,x));
+
+thetas = theta_vect-theta_vect(1);
+eqnU = -thetas == PM(mU,gamma) - PM(M1,gamma);
+eqnL = -thetas == PM(mL,gamma) - PM(M3,gamma);
+
+MU = struct2cell(vpasolve(eqnU,mU));
+ML = struct2cell(vpasolve(eqnL,mL));
+
+m_uu = zeros(length(MU),1);
+m_ll = zeros(length(ML),1);
+
+for k = 1:length(MU)
+    m_uu(k) = abs(double(MU{k}));
+    m_ll(k) = abs(double(ML{k}));
+end
+
+pu = p1 .* ( (1+(gamma-1)./2.*  M1.^2) ...
+           ./(1+(gamma-1)./2.*m_uu.^2) ) .^ (gamma./(gamma-1));
+pl = p3 .* ( (1+(gamma-1)./2.*  M3.^2) ...
+           ./(1+(gamma-1)./2.*m_ll.^2) ) .^ (gamma./(gamma-1));
+
+cl = sum( pl.*cos(theta_vect+alpha)...
+         -pu.*cos(theta_vect-alpha) )...
+    /length(pu)/(0.5*gamma*p*Mi^2);
+cd = sum( pl.*sin(theta_vect+alpha)...
+         +pu.*sin(theta_vect-alpha) )...
+    /length(pu)/(0.5*gamma*p*Mi^2);
+
+cl_vect(i) = cl;
+cd_vect(i) = cd;
+
+end
+
+figure(3)
+plot(rad2deg(alpha_vect),cl_vect./cd_vect)
+title('$C_L/C_D$ vs. $\alpha$')
+xlabel('$\alpha$')
+ylabel('$C_L/C_D$')
+grid(gca,'minor')
+grid on
+latexify
+##### SOURCE END #####
+--></body></html>
