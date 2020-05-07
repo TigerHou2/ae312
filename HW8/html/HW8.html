@@ -1,0 +1,348 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>HW8</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-06"><meta name="DC.source" content="HW8.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Problem 1</a></li><li><a href="#2">Problem 2</a></li><li><a href="#3">Function Definitions</a></li></ul></div><h2 id="1">Problem 1</h2><pre class="codeinput">close <span class="string">all</span>
+clear;clc
+
+M1 = 1.775;
+p1 = 1;
+gamma = 1.4;
+p0 = (1+(gamma-1)/2*M1^2)^(gamma/(gamma-1));
+
+lb = -0.2;
+rb = 0.75;
+
+<span class="comment">% ------------------------------</span>
+<span class="comment">% ---- Part a</span>
+<span class="comment">% ------------------------------</span>
+
+<span class="comment">% plot the wall</span>
+xw = linspace(lb,rb,1000)';
+y = @(x) 0 .* (x&lt;=0) <span class="keyword">...</span>
+       + (cos(asin(x))-1) .* (x&gt;0 &amp; asin(x)&lt;=deg2rad(16)) <span class="keyword">...</span>
+       + (1/cosd(16)-1-tand(16).*x) .* (asin(x)&gt;deg2rad(16));
+yw = y(xw);
+figure(1)
+plot(xw,yw);
+axis <span class="string">equal</span>
+
+<span class="comment">% find points to plot expansion fan contours</span>
+num_fan = 15;
+num_pts = 20;
+num_streams = 10;
+stream_height = 0.3;
+X = nan(num_fan,num_pts);
+Y = nan(num_fan,num_pts);
+U = nan(num_fan,num_pts);
+V = nan(num_fan,num_pts);
+P = nan(num_fan,num_pts);
+M = nan(num_fan,num_pts);
+
+xs = linspace(0,sind(16),num_fan);
+ys = y(xs);
+ts = -asin(xs);
+Ms = nan(size(ts));
+syms <span class="string">mm</span> <span class="string">positive</span>
+<span class="keyword">for</span> i = 1:length(ts)
+    eqn = -ts(i) == PM(mm,gamma) - PM(M1,gamma);
+    Ms(i) = abs(double(vpasolve(eqn,mm)));
+    xx = linspace(xs(i),xs(i)+0.4,num_pts);
+    yy = tan(ts(i)+1/Ms(i)).*(xx-xs(i))+ys(i);
+
+    X(i,:) = xx;
+    Y(i,:) = yy;
+    U(i,:) = Ms(i) * cos(ts(i));
+    V(i,:) = Ms(i) * sin(ts(i));
+    P(i,:) = p0 * (1+(gamma-1)/2*Ms(i)^2)^(-gamma/(gamma-1));
+    M(i,:) = Ms(i);
+
+<span class="keyword">end</span>
+
+hold <span class="string">on</span>
+quiver(X,Y,U,V)
+hold <span class="string">off</span>
+
+xlabel(<span class="string">'x, ft'</span>)
+ylabel(<span class="string">'y, ft'</span>)
+title(<span class="string">'Streamlines of Expansion Turn'</span>)
+
+latexify(19,15)
+
+<span class="comment">% ------------------------------</span>
+<span class="comment">% ---- Part b</span>
+<span class="comment">% ------------------------------</span>
+
+<span class="comment">% --- pressure plot ---</span>
+figure(2)
+contourf(X,Y,P)
+axis <span class="string">equal</span>
+xlabel(<span class="string">'x, ft'</span>)
+ylabel(<span class="string">'y, ft'</span>)
+title(<span class="string">'Pressure Plot'</span>)
+c = colorbar;
+c.Label.String = <span class="string">'atm'</span>;
+latexify(19,11)
+
+<span class="comment">% --- Mach plot ---</span>
+figure(3)
+contourf(X,Y,M)
+axis <span class="string">equal</span>
+xlabel(<span class="string">'x, ft'</span>)
+ylabel(<span class="string">'y, ft'</span>)
+title(<span class="string">'Mach Plot'</span>)
+c = colorbar;
+c.Label.String = <span class="string">'Mach Number'</span>;
+latexify(19,11)
+</pre><img vspace="5" hspace="5" src="HW8_01.png" alt=""> <img vspace="5" hspace="5" src="HW8_02.png" alt=""> <img vspace="5" hspace="5" src="HW8_03.png" alt=""> <h2 id="2">Problem 2</h2><pre class="codeinput">close <span class="string">all</span>
+clear;clc
+
+<span class="comment">% ------------------------------</span>
+<span class="comment">% ---- Part a</span>
+<span class="comment">% ------------------------------</span>
+alpha = deg2rad(4);
+tc = 0.05;
+x = linspace(-0.5,0.5,200);
+M = 2;
+[cpu,cpl] = cp_Joukowski(x,alpha,tc,M);
+figure(4)
+hold <span class="string">on</span>
+plot(x,cpu,<span class="string">'LineWidth'</span>,1)
+plot(x,cpl,<span class="string">'LineWidth'</span>,1)
+hold <span class="string">off</span>
+grid(gca,<span class="string">'minor'</span>)
+grid <span class="string">on</span>
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'$c_p$'</span>)
+title(<span class="string">'$C_p$ Plot'</span>)
+legend(<span class="string">'$C_{p,u}$'</span>,<span class="string">'$C_{p,l}$'</span>)
+latexify(19,12)
+
+<span class="comment">% ------------------------------</span>
+<span class="comment">% ---- Part b</span>
+<span class="comment">% ------------------------------</span>
+</pre><h2 id="3">Function Definitions</h2><pre class="codeinput"><span class="keyword">function</span> [cpu,cpl] = cp_Joukowski(x,alpha,tc,M)
+<span class="comment">%CP_JOUKOWSKI Summary of this function isn't here</span>
+<span class="comment">%   why is a bicycle slower than a tricycle?</span>
+<span class="comment">%   because it's two-tired.</span>
+
+c = max(x)-min(x);
+t = c * tc;
+theta = c .* ( (77.*t.*x.*((2.*x)./c - 1))./(50.*c.^3.*(1 - (4.*x.^2)./c.^2).^(1./2)) - (77.*t.*(1 - (4.*x.^2)./c.^2).^(1./2))./(100.*c.^2));
+theta_u = theta - alpha;
+theta_l = -theta - alpha;
+cpu = 2.*theta_u / sqrt(M^2-1);
+cpl = 2.*theta_l / sqrt(M^2-1);
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="HW8_04.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Problem 1
+
+close all
+clear;clc
+
+M1 = 1.775;
+p1 = 1;
+gamma = 1.4;
+p0 = (1+(gamma-1)/2*M1^2)^(gamma/(gamma-1));
+
+lb = -0.2;
+rb = 0.75;
+
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH Part a
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+
+% plot the wall
+xw = linspace(lb,rb,1000)';
+y = @(x) 0 .* (x<=0) ...
+       + (cos(asin(x))-1) .* (x>0 & asin(x)<=deg2rad(16)) ...
+       + (1/cosd(16)-1-tand(16).*x) .* (asin(x)>deg2rad(16));
+yw = y(xw);
+figure(1)
+plot(xw,yw);
+axis equal
+
+% find points to plot expansion fan contours
+num_fan = 15;
+num_pts = 20;
+num_streams = 10;
+stream_height = 0.3;
+X = nan(num_fan,num_pts);
+Y = nan(num_fan,num_pts);
+U = nan(num_fan,num_pts);
+V = nan(num_fan,num_pts);
+P = nan(num_fan,num_pts);
+M = nan(num_fan,num_pts);
+
+xs = linspace(0,sind(16),num_fan);
+ys = y(xs);
+ts = -asin(xs);
+Ms = nan(size(ts));
+syms mm positive
+for i = 1:length(ts)
+    eqn = -ts(i) == PM(mm,gamma) - PM(M1,gamma);
+    Ms(i) = abs(double(vpasolve(eqn,mm)));
+    xx = linspace(xs(i),xs(i)+0.4,num_pts);
+    yy = tan(ts(i)+1/Ms(i)).*(xx-xs(i))+ys(i);
+    
+    X(i,:) = xx;
+    Y(i,:) = yy;
+    U(i,:) = Ms(i) * cos(ts(i));
+    V(i,:) = Ms(i) * sin(ts(i));
+    P(i,:) = p0 * (1+(gamma-1)/2*Ms(i)^2)^(-gamma/(gamma-1));
+    M(i,:) = Ms(i);
+
+end
+
+hold on
+quiver(X,Y,U,V)
+hold off
+
+xlabel('x, ft')
+ylabel('y, ft')
+title('Streamlines of Expansion Turn')
+
+latexify(19,15)
+
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH Part b
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+
+% REPLACE_WITH_DASH_DASH- pressure plot REPLACE_WITH_DASH_DASH-
+figure(2)
+contourf(X,Y,P)
+axis equal
+xlabel('x, ft')
+ylabel('y, ft')
+title('Pressure Plot')
+c = colorbar;
+c.Label.String = 'atm';
+latexify(19,11)
+
+% REPLACE_WITH_DASH_DASH- Mach plot REPLACE_WITH_DASH_DASH-
+figure(3)
+contourf(X,Y,M)
+axis equal
+xlabel('x, ft')
+ylabel('y, ft')
+title('Mach Plot')
+c = colorbar;
+c.Label.String = 'Mach Number';
+latexify(19,11)
+
+
+%% Problem 2
+
+close all
+clear;clc
+
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH Part a
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+alpha = deg2rad(4);
+tc = 0.05;
+x = linspace(-0.5,0.5,200);
+M = 2;
+[cpu,cpl] = cp_Joukowski(x,alpha,tc,M);
+figure(4)
+hold on
+plot(x,cpu,'LineWidth',1)
+plot(x,cpl,'LineWidth',1)
+hold off
+grid(gca,'minor')
+grid on
+xlabel('x')
+ylabel('$c_p$')
+title('$C_p$ Plot')
+legend('$C_{p,u}$','$C_{p,l}$')
+latexify(19,12)
+
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH Part b
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+
+
+
+%% Function Definitions
+
+function [cpu,cpl] = cp_Joukowski(x,alpha,tc,M)
+%CP_JOUKOWSKI Summary of this function isn't here
+%   why is a bicycle slower than a tricycle?
+%   because it's two-tired.
+
+c = max(x)-min(x);
+t = c * tc;
+theta = c .* ( (77.*t.*x.*((2.*x)./c - 1))./(50.*c.^3.*(1 - (4.*x.^2)./c.^2).^(1./2)) - (77.*t.*(1 - (4.*x.^2)./c.^2).^(1./2))./(100.*c.^2));
+theta_u = theta - alpha;
+theta_l = -theta - alpha;
+cpu = 2.*theta_u / sqrt(M^2-1);
+cpl = 2.*theta_l / sqrt(M^2-1);
+end
+
+##### SOURCE END #####
+--></body></html>
