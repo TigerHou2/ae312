@@ -58,12 +58,16 @@ disp(' ')
 % ------------------------------
 % Part b
 if MeB > MeA
-    disp('b) TRUE.  ("The Mach number at the exit of Nozzle B is larget than that for Nozzle A")')
-else
-    disp('b) FALSE. ("The Mach number at the exit of Nozzle B is larget than that for Nozzle A")')
+     disp('b) TRUE.  ("The Mach number at the exit of Nozzle B is larget than that for Nozzle A")')
+else disp('b) FALSE. ("The Mach number at the exit of Nozzle B is larget than that for Nozzle A")')
 end
 if MeB > 1
-    disp('   TRUE.  ("The flow at the exit of Nozzle B is supersonic")')
-else
-    disp('   FALSE. ("The flow at the exit of Nozzle B is supersonic")')
+     disp('   TRUE.  ("The flow at the exit of Nozzle B is supersonic")')
+else disp('   FALSE. ("The flow at the exit of Nozzle B is supersonic")')
 end
+if Pb6 == 1*atm
+     disp('   TRUE.  ("The pressure at the exit of Nozzl B is 1 atm")')
+else disp('   FALSE. ("The pressure at the exit of Nozzl B is 1 atm")')
+end
+     disp('   TRUE.  ("The flow within both nozzles is isentropic")')
+     disp('   FALSE. ("The pressure at the inlet of Nozzle A is higher than 3.0 atm")')
