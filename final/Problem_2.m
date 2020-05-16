@@ -3,6 +3,9 @@
 close all
 clear;clc
 
+disp('Problem 2')
+disp(' ')
+
 atm = 101.3e3; % kPa
 p0 = 3 * atm;
 pb = 1 * atm;
@@ -58,8 +61,8 @@ disp(' ')
 % ------------------------------
 % Part b
 if MeB > MeA
-     disp('b) TRUE.  ("The Mach number at the exit of Nozzle B is larget than that for Nozzle A")')
-else disp('b) FALSE. ("The Mach number at the exit of Nozzle B is larget than that for Nozzle A")')
+     disp('b) TRUE.  ("The Mach number at the exit of Nozzle B is larger than that for Nozzle A")')
+else disp('b) FALSE. ("The Mach number at the exit of Nozzle B is larger than that for Nozzle A")')
 end
 if MeB > 1
      disp('   TRUE.  ("The flow at the exit of Nozzle B is supersonic")')
@@ -71,3 +74,4 @@ else disp('   FALSE. ("The pressure at the exit of Nozzl B is 1 atm")')
 end
      disp('   TRUE.  ("The flow within both nozzles is isentropic")')
      disp('   FALSE. ("The pressure at the inlet of Nozzle A is higher than 3.0 atm")')
+disp(' ')
