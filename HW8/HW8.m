@@ -124,6 +124,17 @@ latexify(19,12)
 % ---- Part b
 % ------------------------------
 
+M_sub = linspace(0,1,100);
+M_sup = linspace(1.01,2,100);
+Cl0 = 2*pi*(1 + 0.77*tc)*sin(alpha);
+Cl_sub = Cl0./sqrt(1 - M_sub.^2);
+Cl_sup = 4*alpha./sqrt(M_sup.^2 - 1);
+figure(5)
+hold on
+plot(M_sub,Cl_sub,'LineWidth', 2);
+plot(M_sup,Cl_sup,'LineWidth', 2);
+hold off
+
 
 
 %% Function Definitions
@@ -138,6 +149,6 @@ t = c * tc;
 theta = c .* ( (77.*t.*x.*((2.*x)./c - 1))./(50.*c.^3.*(1 - (4.*x.^2)./c.^2).^(1./2)) - (77.*t.*(1 - (4.*x.^2)./c.^2).^(1./2))./(100.*c.^2));
 theta_u = theta - alpha;
 theta_l = -theta - alpha;
-cpu = 2.*theta_u / sqrt(M^2-1);
-cpl = 2.*theta_l / sqrt(M^2-1);
+cpu = 2.*theta_u / sqrt(M.^2-1);
+cpl = 2.*theta_l / sqrt(M.^2-1);
 end
